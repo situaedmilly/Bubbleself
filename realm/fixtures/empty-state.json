@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "realm_id": "today",
+  "payload_id": "payload-empty-state-001",
+  "generated_at": "2026-07-14T12:00:00Z",
+  "user": { "user_id": "user-new" },
+  "permissions": {
+    "can_edit_reflection": false,
+    "can_complete_practice": false,
+    "can_seal_day": false,
+    "can_flag_reflection": false
+  },
+  "revision": 0
+}

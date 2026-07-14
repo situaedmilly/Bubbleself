@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Today &middot; SELF JOURNEY</title>
+</head>
+<body>
+  <div id="realm-root"></div>
+  <script src="realm.js"></script>
+  <script>
+    // Bubble calls this once, with the day's canonical payload, to mount the realm.
+    window.SELF_JOURNEY_MOUNT = function (payload) {
+      window.UMI_SOLAN.mount("realm-root", payload);
+    };
+    // Bubble calls this to deliver a callback after processing an emitted event.
+    window.bubble_fn_realm_callback = function (callbackJson) {
+      window.UMI_SOLAN.receiveCallback(JSON.parse(callbackJson));
+    };
+    // Bubble calls this to push a fresh canonical payload (e.g. after external changes).
+    window.bubble_fn_realm_update = function (payloadJson) {
+      window.UMI_SOLAN.update(JSON.parse(payloadJson));
+    };
+  </script>
+</body>
+</html>

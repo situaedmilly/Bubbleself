@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "realm_id": "today",
+  "payload_id": "payload-completed-day-001",
+  "generated_at": "2026-07-14T12:00:00Z",
+  "user": { "user_id": "user-abc" },
+  "journey": {
+    "journey_id": "j-001",
+    "phase_id": "phase-01",
+    "phase_title": "Recognition",
+    "day_index": 17,
+    "total_days": 365,
+    "progress_percent": 4.6
+  },
+  "day": {
+    "day_id": "day-017",
+    "title": "Day 17",
+    "status": "completed",
+    "sealed_at": "2026-07-13T20:15:00Z",
+    "practice": { "completed": true },
+    "reflection": {
+      "prompt": "What moved through SELF today?",
+      "existing_text": "I observed X, learned Y.",
+      "important": false
+    }
+  },
+  "permissions": {
+    "can_edit_reflection": false,
+    "can_complete_practice": false,
+    "can_seal_day": false,
+    "can_flag_reflection": true
+  },
+  "revision": 20
+}

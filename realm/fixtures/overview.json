@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "realm_id": "overview",
+  "payload_id": "payload-overview-001",
+  "generated_at": "2026-07-14T12:00:00Z",
+  "user": { "user_id": "user-abc" },
+  "journey": {
+    "journey_id": "j-001",
+    "phase_id": "phase-01",
+    "phase_title": "Recognition",
+    "day_index": 18,
+    "total_days": 365,
+    "progress_percent": 4.9,
+    "phases": [
+      { "phase_id": "phase-01", "phase_title": "Recognition" },
+      { "phase_id": "phase-02", "phase_title": "Acceptance" }
+    ],
+    "days": [
+      { "day_id": "day-016", "status": "completed", "sealed_at": "2026-07-11T20:00:00Z" },
+      { "day_id": "day-017", "status": "completed", "sealed_at": "2026-07-13T20:15:00Z" },
+      { "day_id": "day-018", "status": "active", "sealed_at": null }
+    ]
+  },
+  "permissions": {},
+  "revision": 20
+}

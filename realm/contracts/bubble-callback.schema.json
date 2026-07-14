@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BubbleCallback",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "callback_id", "event_id", "event_type", "status", "processed_at", "new_revision"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "callback_id": { "type": "string" },
+    "event_id": { "type": "string" },
+    "event_type": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["accepted", "rejected", "invalid", "stale_revision", "conflict", "server_error"]
+    },
+    "processed_at": { "type": "string" },
+    "new_revision": { "type": "integer" },
+    "result": { "type": "object" },
+    "canonical_patch": { "type": "object" },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "message"],
+        "properties": {
+          "code": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    "evidence": { "type": "object" }
+  }
+}

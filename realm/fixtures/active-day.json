@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "realm_id": "today",
+  "payload_id": "payload-active-day-001",
+  "generated_at": "2026-07-14T12:00:00Z",
+  "user": { "user_id": "user-abc" },
+  "journey": {
+    "journey_id": "j-001",
+    "phase_id": "phase-01",
+    "phase_title": "Recognition",
+    "day_index": 18,
+    "total_days": 365,
+    "progress_percent": 4.9
+  },
+  "day": {
+    "day_id": "day-018",
+    "title": "Day 18",
+    "status": "active",
+    "sealed_at": null,
+    "practice": { "completed": false },
+    "reflection": {
+      "prompt": "What moved through SELF today?",
+      "existing_text": ""
+    }
+  },
+  "permissions": {
+    "can_edit_reflection": true,
+    "can_complete_practice": true,
+    "can_seal_day": false,
+    "can_flag_reflection": true
+  },
+  "revision": 12
+}

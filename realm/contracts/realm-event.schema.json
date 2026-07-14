@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RealmEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "event_type",
+    "realm_id",
+    "occurred_at",
+    "source_revision",
+    "actor",
+    "target",
+    "payload"
+  ],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "event_id": { "type": "string" },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "journey.reflection.save_requested",
+        "journey.day.seal_requested",
+        "journey.reflection.flag_requested",
+        "realm.navigate_requested",
+        "journey.section.viewed"
+      ]
+    },
+    "realm_id": { "type": "string" },
+    "occurred_at": { "type": "string" },
+    "source_revision": { "type": "integer" },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["user_id", "interaction_type"],
+      "properties": {
+        "user_id": { "type": "string" },
+        "interaction_type": { "type": "string", "enum": ["human", "system"] }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "journey_id": { "type": "string" },
+        "day_id": { "type": "string" }
+      }
+    },
+    "payload": { "type": "object" },
+    "context": { "type": "object" },
+    "evidence": { "type": "object" }
+  }
+}

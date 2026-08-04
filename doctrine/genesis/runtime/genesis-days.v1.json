@@ -1,0 +1,504 @@
+{
+  "protocolVersion": "genesis.v1",
+  "compiledFrom": {
+    "spec": "doctrine/genesis/GENESIS-PROTOCOL-SPEC-v1.md",
+    "dayDocuments": [
+      "doctrine/genesis/DAY-1-THE-RAW-STATE-v1.md",
+      "doctrine/genesis/DAY-2-THE-EXTRACTION-MAP-v1.md",
+      "doctrine/genesis/DAY-3-THE-PROOF-OF-FORCE-v1.md",
+      "doctrine/genesis/DAY-4-THE-SELF-BETRAYAL-AUDIT-v1.md",
+      "doctrine/genesis/DAY-5-THE-REPOSSESSION-v1.md",
+      "doctrine/genesis/DAY-6-THE-REALITY-MUTATION-v1.md",
+      "doctrine/genesis/DAY-7-THE-EVIDENCE-COURT-v1.md"
+    ],
+    "sourceCommit": "c7ae23042e0c8f3ca013f270bcdea107f7d1d0dd"
+  },
+  "sharedLaw": {
+    "bannedGateVerbs": ["work on", "think about", "improve", "research", "design", "plan", "get a sense of", "figure out"],
+    "terminalDayStates": ["SEALED", "FAILED_MEASURED"],
+    "unrecoverableState": {
+      "name": "NARRATED_UNMEASURED",
+      "definition": "No seal, no failure line, vagueness carried overnight.",
+      "recovery": "Write the failure line late and mark it late."
+    },
+    "completionStatementCount": 2,
+    "sealCanFailEveryDay": true,
+    "discomfortScale": { "min": 0, "max": 10, "easyVersionThreshold": 7 },
+    "eveningMemo": { "minimumSeconds": 180, "listenPolicy": "listen_once_do_not_delete", "firstCleanStoppingSentence": "halfway_mark_not_end" },
+    "stationAbandonmentColumn": "feeling_not_reason",
+    "tallyTimestampsMandatory": true,
+    "streakLaw": "Sealed and failed-measured days are recorded side by side; the measurement is the streak.",
+    "morningCommandEditPolicy": "Command may not be edited on the day it runs (editing is D-002).",
+    "protocolDocumentEditPolicy": "Refining any protocol document instead of executing it is always the trap's first form (D-002)."
+  },
+  "carriedDoctrines": [
+    {
+      "doctrineId": "D-001",
+      "name": "NARRATIVE COMPLETION",
+      "proposition": "SELF experiences the feeling of a completed future before material completion, and the feeling substitutes for the act.",
+      "tell": "The win-feeling spikes right after friction and right after small wins.",
+      "instrument": "Daily Narrative Completion Check with timestamp."
+    },
+    {
+      "doctrineId": "D-002",
+      "name": "DESIGN SUBSTITUTION",
+      "proposition": "Under friction, SELF escapes into architecture — planning, improving, refining the protocol itself.",
+      "instrument": "Design-instead-of-do component of the leak tally; standing ban on editing protocol documents on the day they run."
+    },
+    {
+      "doctrineId": "D-003",
+      "name": "AUTHORSHIP",
+      "proposition": "SELF completes self-authored structures at a higher rate than imposed ones.",
+      "falsificationRule": "Low completion across BOTH self-authored and imposed structures falsifies: mechanism is friction-avoidance, not autonomy. Rewrite the doctrine.",
+      "instrument": "Live structure log: Time / Structure / Self-authored-Imposed / Completed-Abandoned / feeling one second before abandonment."
+    }
+  ],
+  "covenant": {
+    "requiredBeforeDay": 1,
+    "clauseCount": 10,
+    "law": "No covenant signature, no Day 1."
+  },
+  "days": [
+    {
+      "protocolVersion": "genesis.v1",
+      "dayNumber": 1,
+      "slug": "the-raw-state",
+      "title": "THE RAW STATE",
+      "removes": "Vagueness",
+      "requiredOutput": "Reality Position Sheet",
+      "doctrine": {
+        "doctrineId": "D-101",
+        "name": "VAGUENESS AS SHELTER",
+        "proposition": "SELF keeps facts unmeasured because precision creates obligation.",
+        "prediction": "Resistance clusters on exactly the fields whose numbers SELF already roughly knows.",
+        "falsificationRule": "Every field fills with exact values at equal speed and the approximation tally stays near zero — vagueness was a data-access problem, not a shelter. Rewrite it.",
+        "falsificationIsWin": true
+      },
+      "trap": {
+        "name": "THE ELOQUENT CONFESSION",
+        "definition": "Vagueness upgraded to poetry — writing something deep and true-sounding about the situation instead of writing the number.",
+        "detectionSignals": [
+          "adjectives where numbers should be (heavy, complicated, roughly, I think around)",
+          "approximation for a value retrievable in under two minutes",
+          "writing about the sheet instead of into it",
+          "surrendered phrases"
+        ],
+        "runtimeResponse": "That statement describes intensity, not position. Enter one exact value, one source artifact, or explicitly mark the field MISSING with a retrieval date.",
+        "readOncePolicy": true
+      },
+      "surrenderedPhrases": ["I'm trying.", "I'm figuring it out.", "Money been funny.", "I know I can do more.", "I just need consistency.", "A lot has been going on."],
+      "gate": {
+        "prompt": "Today's exposure artifact is:",
+        "artifactLineCount": 1,
+        "definitionOfDone": [
+          "Reality Position Sheet has zero empty fields — every field carries an exact value or 'MISSING — retrieval date'",
+          "Exposure artifact exists and is attached to the record",
+          "Every number came from a source (statement, screenshot, export) — not from memory",
+          "Fact/Story split (Station 3) is complete"
+        ],
+        "completionStatements": ["I exposed the raw state.", "I did not expose the raw state."],
+        "failureConditions": ["No artifact named — the day does not start", "Incomplete sheet with a beautiful reflection attached"]
+      },
+      "openingDebt": { "requiredPriorDay": null, "resolutionRequirement": "Covenant signed (GENESIS-PROTOCOL-SPEC-v1.md §8)." },
+      "stations": [
+        { "stationId": "d1-s1", "name": "THE SYSTEM DUMP", "law": "Each answer must contain a number, a name, or a date." },
+        { "stationId": "d1-s2", "name": "THE REALITY POSITION SHEET", "law": "15 fields; exact value + source artifact + verified date; MISSING-with-retrieval-date lawful, '~' is not; fill order logged." },
+        { "stationId": "d1-s3", "name": "FACT / STORY SPLIT", "law": "Three verbatim statements classified FACT (has an artifact) or STORY (has a vibe), with the fact each story conceals." }
+      ],
+      "materialAction": { "name": "THE EXPOSURE", "requirement": "Attach one real artifact to the record." },
+      "tally": { "eventType": "genesis.tally.approximation", "label": "approximation", "timestampRequired": true, "reasonFieldForbidden": true, "countsAs": "every ~, roughly, about, I think, or surrendered phrase for a value retrievable in under two minutes" },
+      "mirror": {
+        "sourcePolicy": "verbatim_user_language",
+        "question": "What did it cost you to not know that number until today — and who has been making decisions with it while you weren't looking?",
+        "sourceFields": ["reality_position_sheet.last_filled_field", "reality_position_sheet.missing_fields"]
+      },
+      "eveningMemo": { "minimumSeconds": 180, "requiredStems": ["The number I most did not want to write down was… and the story I had been using to avoid it was…"] },
+      "narrativeCheck": {
+        "questions": ["Did I feel a future win before earning it today?", "If yes — what, and at what hour?"],
+        "refusalRule": "Filling out a sheet can feel like fixing a life. It isn't. The timestamp is the tell."
+      },
+      "seal": {
+        "canFail": true,
+        "requirements": ["System Dump", "Reality Position Sheet (zero empty fields)", "Fact/Story split", "Exposure artifact attached", "Voice memo >= 3:00", "Tallies with timestamps"],
+        "discomfortThresholdNote": "under 7 = you measured the parts that were already safe to see",
+        "failureMessage": "I protected field X.",
+        "sealLaw": "I cannot command a reality I refuse to measure."
+      }
+    },
+    {
+      "protocolVersion": "genesis.v1",
+      "dayNumber": 2,
+      "slug": "the-extraction-map",
+      "title": "THE EXTRACTION MAP",
+      "removes": "Unauthorized access",
+      "requiredOutput": "Extraction Graph",
+      "doctrine": {
+        "doctrineId": "D-102",
+        "name": "AVOIDED REVOCATION",
+        "proposition": "Extraction persists not because it is hidden but because revocation costs a confrontation SELF avoids.",
+        "prediction": "SELF can name its heaviest extraction before any mapping (the Gate proves this).",
+        "falsificationRule": "The map genuinely surprises SELF about its heaviest extraction — the mechanism is visibility, not avoidance. Rewrite it.",
+        "falsificationIsWin": true
+      },
+      "trap": {
+        "name": "THE MISSING ROW",
+        "definition": "The map fills with everything except the one access SELF is afraid to name; extraction mapping without that row is a grievance inventory.",
+        "secondHead": "MORAL ACCOUNTING — cataloguing who takes becomes the day's product; a map of thieves changes nothing, a changed lock does.",
+        "detectionSignals": ["steering around a name", "map full of small extractions only", "resentment presenting as clarity"],
+        "runtimeResponse": "The audit is not 'is the map full?' It is 'who is absent from it?' Write the row.",
+        "readOncePolicy": true
+      },
+      "gate": {
+        "prompt": "The access I already know I will revoke today is:",
+        "artifactLineCount": 1,
+        "gateLaw": "You knew one before the map existed. If the Gate needed the map, the Gate would be research — and research is banned as a Gate verb.",
+        "definitionOfDone": [
+          "The revocation executed today — cancelled, declined, moved, stated, blocked",
+          "Evidence exists (confirmation screen, sent message, changed permission, calendar block)",
+          "The Extraction Graph has a verdict in every row"
+        ],
+        "completionStatements": ["I revoked the access.", "I did not revoke the access."],
+        "failureConditions": ["No revocation named — the day does not start", "A full map with no revocation"]
+      },
+      "openingDebt": { "requiredPriorDay": 1, "resolutionRequirement": "Day 1 sealed or failure line written ('I protected field X'). Ambiguous yesterday blocks the day." },
+      "stations": [
+        { "stationId": "d2-s1", "name": "THE EXTRACTION SWEEP", "law": "Six categories (economic, attention, emotional, labor, identity, ambition); at least one honest entry per category or written 'none found — checked'." },
+        { "stationId": "d2-s2", "name": "THE EXTRACTION GRAPH", "law": "Every source gets a full row; every row a verdict (TERMINATE/RENEGOTIATE/CONTAIN/RETAIN); RETAIN must state the proportionate return; mandatory absence audit." },
+        { "stationId": "d2-s3", "name": "THE REVOCATION", "law": "Not the largest extraction — the one that proves the node can revoke access. Cost logged as feeling, not reason." }
+      ],
+      "materialAction": { "name": "THE REVOCATION", "requirement": "One access revoked with evidence." },
+      "tally": { "eventType": "genesis.tally.virtue_word", "label": "virtue-word", "timestampRequired": true, "reasonFieldForbidden": true, "countsAs": "every time a drain gets defended with loyalty, family, support, 'they need me', 'it's fine', 'it's not that deep'" },
+      "mirror": {
+        "sourcePolicy": "verbatim_user_language",
+        "question": "Read the graph. Is the heaviest name from yesterday's sheet on it? If not — is their absence data, or accident? Which recurring expense on this map exists because a recurring decision has not been made — and what is the decision?",
+        "sourceFields": ["day1.reality_position_sheet.PEOPLE_DRAINING_SELF", "day1.reality_position_sheet.RECURRING_OBLIGATIONS"]
+      },
+      "eveningMemo": { "minimumSeconds": 180, "requiredStems": ["The access I revoked today cost me… The access I did not revoke is… and what it buys the other party is…"] },
+      "narrativeCheck": {
+        "questions": ["Did I feel a future win before earning it today?", "If yes — what, and at what hour?"],
+        "refusalRule": "Finishing the map can feel like closing the leaks. A mapped leak still leaks."
+      },
+      "seal": {
+        "canFail": true,
+        "requirements": ["Extraction sweep (6 categories)", "Extraction Graph with verdicts", "Absence audit run", "Revocation evidence", "Voice memo >= 3:00", "Tallies with timestamps"],
+        "discomfortThresholdNote": "under 7 = you revoked something that cost nothing",
+        "failureMessage": "I mapped and did not move.",
+        "sealLaw": "Access to SELF is not inherited. It is governed."
+      }
+    },
+    {
+      "protocolVersion": "genesis.v1",
+      "dayNumber": 3,
+      "slug": "the-proof-of-force",
+      "title": "THE PROOF OF FORCE",
+      "removes": "False incapacity",
+      "requiredOutput": "Force Ledger",
+      "doctrine": {
+        "doctrineId": "D-103",
+        "name": "DISCOUNTED CAPACITY",
+        "proposition": "SELF underweights verified wins to preserve 'potential' status, because proven capacity is billable and potential owes nothing.",
+        "prediction": "The CLAIM step (pricing, witness, publishing) produces more resistance than the RECALL step.",
+        "falsificationRule": "Recall is the hard part and claiming is easy — the mechanism is memory weighting, not obligation avoidance. Rewrite it.",
+        "falsificationIsWin": true
+      },
+      "trap": {
+        "name": "THE HUMBLE DISCOUNT",
+        "definition": "'That doesn't really count' wearing the face of honesty — discounting keeps SELF in potential status, and potential owes nothing.",
+        "secondHead": "THE INFLATED LEDGER — padding the record with claims no witness can confirm. Both heads keep the record unusable.",
+        "detectionSignals": ["doesn't really count", "anyone could have done that", "it was luck", "the conditions were easy", "it wasn't finished/paid/public"],
+        "runtimeResponse": "The WITNESS column kills both heads: an entry is either witnessed or marked UNWITNESSED — no silent middle. The words 'doesn't really count' are a tally, not a judgment.",
+        "readOncePolicy": true
+      },
+      "gate": {
+        "prompt": "The capability that gets a price, a page, or a buyer contact today is:",
+        "artifactLineCount": 1,
+        "definitionOfDone": [
+          "The Force Ledger holds at least 5 complete entries",
+          "The conversion artifact exists — a price named, a page live, or a buyer contacted",
+          "Evidence exists (link, sent messages, signed doc, published post)"
+        ],
+        "completionStatements": ["I converted the capability.", "I did not convert the capability."],
+        "failureConditions": ["No capability named — the day does not start", "A beautiful ledger with nothing priced"]
+      },
+      "openingDebt": { "requiredPriorDay": 2, "resolutionRequirement": "Day 2 sealed or failure line written. Memo recorded, verdicts filled, or failure line written and signed." },
+      "stations": [
+        { "stationId": "d3-s1", "name": "THE FORCE LEDGER", "law": "Minimum 5 entries, every field; external witness named or entry marked UNWITNESSED — no silent middle." },
+        { "stationId": "d3-s2", "name": "THE UNBILLED INVENTORY", "law": "Count entries marked NO or PARTIAL; pick the conversion target (strongest witness, weakest price)." },
+        { "stationId": "d3-s3", "name": "THE CONVERSION", "law": "Convert the Gate capability into a live offer, asset, or command; price or claim in numbers or exact words; feeling one second before publishing." }
+      ],
+      "materialAction": { "name": "THE CONVERSION", "requirement": "One capability converted into a live offer with evidence." },
+      "tally": { "eventType": "genesis.tally.discount", "label": "discount", "timestampRequired": true, "reasonFieldForbidden": true, "countsAs": "every 'doesn't really count', 'anyone could', 'just luck', 'the bar was low', 'it wasn't a big deal' — the discount spikes when an entry gets close to billable" },
+      "mirror": {
+        "sourcePolicy": "verbatim_user_language",
+        "question": "If a stranger woke up tomorrow holding your Force Ledger — same evidence, same witnesses — what would they charge for it by Friday? Write the number. Now: what has the discount been buying you that the invoice wouldn't?",
+        "sourceFields": ["day1.reality_position_sheet.SKILLS_WITH_MARKET_VALUE", "day1.reality_position_sheet.SKILLS_NOT_YET_MONETIZED"]
+      },
+      "eveningMemo": { "minimumSeconds": 180, "requiredStems": ["The entry in my Force Ledger I keep trying to shrink is… and if I stop shrinking it, I would have to…"] },
+      "narrativeCheck": {
+        "questions": ["Did I feel a future win before earning it today?", "If yes — what, and at what hour?"],
+        "refusalRule": "A finished ledger can feel like a funded business. It's a list until the offer ships."
+      },
+      "seal": {
+        "canFail": true,
+        "requirements": ["Force Ledger (>=5 complete entries, witness column honest)", "Unbilled inventory count", "Conversion artifact + evidence", "Voice memo >= 3:00", "Tallies with timestamps"],
+        "discomfortThresholdNote": "under 7 = you priced the capability you were least afraid to claim",
+        "failureMessage": "I proved it and kept it unpriced.",
+        "sealLaw": "Potential is capacity without witness. My capacity now has evidence."
+      }
+    },
+    {
+      "protocolVersion": "genesis.v1",
+      "dayNumber": 4,
+      "slug": "the-self-betrayal-audit",
+      "title": "THE SELF-BETRAYAL AUDIT",
+      "removes": "Constitutional hypocrisy",
+      "requiredOutput": "Betrayal Record",
+      "doctrine": {
+        "doctrineId": "D-104",
+        "name": "SHAME SETTLEMENT",
+        "proposition": "SELF uses guilt as currency — feeling bad discharges the debt so repair never executes.",
+        "prediction": "Shame arrives before or instead of the repair action, and repair gets postponed once shame is felt.",
+        "falsificationRule": "The repair executes within 24 hours without a shame spike — the betrayals were scheduling failures, not settlement structures. Rewrite it.",
+        "falsificationIsWin": true
+      },
+      "trap": {
+        "name": "THE SHAME PAYMENT",
+        "definition": "Feeling bad presents itself as accountability — it hurts enough to feel like justice and costs nothing structural. Guilt discharges the debt emotionally so the repair never executes.",
+        "secondHead": "THE CONFESSION LOOP — confessing the same betrayal eloquently for the nth time; at n>=2 the confession IS the betrayal, renewed.",
+        "detectionSignals": ["guilt arriving and offering to settle", "repair stalling after a shame spike", "repeat confession of an already-confessed betrayal"],
+        "runtimeResponse": "The audit accepts exactly one currency: repair executed. Feelings are not legal tender here. Tally it, timestamp it, return to the artifact.",
+        "readOncePolicy": true
+      },
+      "gate": {
+        "prompt": "The betrayal I will repair within 24 hours is: / The repair artifact is:",
+        "artifactLineCount": 2,
+        "gateLaw": "An apology is not an artifact. A repair is.",
+        "definitionOfDone": [
+          "The Betrayal Record holds at least 3 complete rows",
+          "The Gate repair executed — the artifact exists inside the 24-hour window",
+          "At least 3 SELF SAID / SELF DID side-by-sides written verbatim"
+        ],
+        "completionStatements": ["I repaired the betrayal.", "I did not repair the betrayal."],
+        "failureConditions": ["No betrayal + artifact named — the day does not start", "A record full of contradictions and zero repairs"]
+      },
+      "repairClock": { "startsAt": "gate_declaration", "windowHours": 24, "dueTimestampImmutable": true },
+      "openingDebt": { "requiredPriorDay": 3, "resolutionRequirement": "Day 3 sealed or failure line written. If Day 3 sealed, read the warning twice: the day after a win is the highest-risk day. A win is a down payment, not permission." },
+      "stations": [
+        { "stationId": "d4-s1", "name": "THE BETRAYAL SWEEP", "law": "Eight categories (declaration, boundary, evidence, time, capital, creation, relational, body); at least one honest entry each or written 'none found — checked'." },
+        { "stationId": "d4-s2", "name": "THE BETRAYAL RECORD", "law": "Minimum 3 rows, every field, including an executable REPAIR COMMAND with an artifact." },
+        { "stationId": "d4-s3", "name": "SELF SAID / SELF DID", "law": "Minimum 3 side-by-sides, verbatim with source and date. No shame language. Only constitutional contradiction. The gap needs no adjectives." },
+        { "stationId": "d4-s4", "name": "THE REPAIR", "law": "Execute the Gate repair inside 24h; clock start and artifact-landed timestamps logged; shame arrival position logged (before/during/instead/didn't)." }
+      ],
+      "materialAction": { "name": "THE REPAIR", "requirement": "One betrayal repaired within 24 hours with an artifact." },
+      "tally": { "eventType": "genesis.tally.shame_hit", "label": "shame-hit", "timestampRequired": true, "reasonFieldForbidden": true, "countsAs": "every time feeling bad arrives and offers to settle the account; log the hour and what the repair-move would have been. The shame-hit to repair-move ratio is the day's real finding." },
+      "mirror": {
+        "sourcePolicy": "verbatim_user_language",
+        "question": "Which betrayal did you leave off the record because repairing it would require disappointing someone specific? Name the person. Diffuse guilt can't be discharged; one named person can actually be served, or actually be disappointed. Which are you carrying?",
+        "sourceFields": ["day1.reality_position_sheet", "day2.extraction_graph.verdicts", "day3.force_ledger", "any_prior_written_declaration"]
+      },
+      "eveningMemo": { "minimumSeconds": 180, "requiredStems": ["The betrayal I repaired today was… What I wanted to do instead of repairing it was feel…"] },
+      "narrativeCheck": {
+        "questions": ["Did I feel a future win before earning it today?", "If yes — what, and at what hour?"],
+        "refusalRule": "Feeling forgiven is the day's counterfeit win. Forgiveness without the artifact is D-001 in a robe."
+      },
+      "seal": {
+        "canFail": true,
+        "requirements": ["Betrayal sweep (8 categories)", "Betrayal Record (>=3 rows, all fields)", ">=3 verbatim side-by-sides", "Repair artifact inside 24h", "Voice memo >= 3:00", "Tallies with timestamps"],
+        "discomfortThresholdNote": "under 7 = you audited a betrayal you'd already forgiven",
+        "failureMessage": "I confessed and did not repair.",
+        "sealLaw": "A law I repeatedly violate is not yet law."
+      }
+    },
+    {
+      "protocolVersion": "genesis.v1",
+      "dayNumber": 5,
+      "slug": "the-repossession",
+      "title": "THE REPOSSESSION",
+      "removes": "Resource drift",
+      "requiredOutput": "Treasury & Authority Map",
+      "doctrine": {
+        "doctrineId": "D-105",
+        "name": "ALLOCATION DRIFT",
+        "proposition": "Resources without a constitutional destination are allocated by pressure — by whoever or whatever applies force first.",
+        "prediction": "SELF designs the allocation and defers the transfer.",
+        "falsificationRule": "The transfer executes same-day alongside the design — the drift was absence of structure, now corrected; the doctrine survives as environmental, not psychological. Record the rewrite.",
+        "falsificationIsWin": true
+      },
+      "trap": {
+        "name": "THE BEAUTIFUL TREASURY",
+        "definition": "Building the allocation system — categories, labels, cleaner app — with total sincerity, and scheduling the actual transfer for 'when things settle'. Reorganizing, not repossessing.",
+        "detectionSignals": ["every resource categorized, none changed hands", "scheduled repossession", "perfecting structure at transfer time"],
+        "runtimeResponse": "Scheduled repossession is continued occupancy. A plan to move money is not moved money. Tally it, timestamp it, move the resource.",
+        "readOncePolicy": true
+      },
+      "gate": {
+        "prompt": "The resource that moves today is: / FROM (current owner in practice): / TO (constitutional destination):",
+        "artifactLineCount": 2,
+        "definitionOfDone": [
+          "The Treasury & Authority Map is complete for all five resources",
+          "The capital split carries real numbers — or the single word UNSPLIT, signed",
+          "The Gate transfer executed today, with evidence"
+        ],
+        "completionStatements": ["The resource moved.", "The resource did not move."],
+        "failureConditions": ["No resource + endpoints named — the day does not start", "A completed map with an unexecuted transfer"]
+      },
+      "openingDebt": { "requiredPriorDay": 4, "resolutionRequirement": "Day 4 sealed or failure line written. Repair unverified, memo short, or boxes signed empty = ambiguous = blocked." },
+      "stations": [
+        { "stationId": "d5-s1", "name": "THE TREASURY & AUTHORITY MAP", "law": "Five resources (attention, time, capital, access, decision authority); every row every field; 'current owner in practice' is whoever actually decides." },
+        { "stationId": "d5-s2", "name": "THE CAPITAL DOCTRINE", "law": "Split real numbers across operating/reserve/build/speculative/reward — or write the one lawful word UNSPLIT and sign it. An unsigned blank is a leak; a signed UNSPLIT is a measurement." },
+        { "stationId": "d5-s3", "name": "THE TRANSFER", "law": "Execute the Gate transfer; log evidence and the first pressure against the new allocation (held/folded)." }
+      ],
+      "materialAction": { "name": "THE TRANSFER", "requirement": "One resource reallocated with evidence." },
+      "tally": { "eventType": "genesis.tally.later", "label": "later", "timestampRequired": true, "reasonFieldForbidden": true, "countsAs": "every 'when things settle', 'next month', 'after this week clears', 'once X happens' — every later is a lease renewal for the current occupant; laters cluster right before transfers" },
+      "mirror": {
+        "sourcePolicy": "verbatim_user_language",
+        "question": "Who allocated your last unallocated hour, and your last unallocated dollar — you, or whoever applied pressure first? Name the allocator. Is that the officer you meant to appoint?",
+        "sourceFields": ["day1.reality_position_sheet.CASH", "day1.reality_position_sheet.TRADING_CAPITAL", "day1.reality_position_sheet.RISK_EXPOSURE", "day1.reality_position_sheet.TIME_CLAIMS"]
+      },
+      "eveningMemo": { "minimumSeconds": 180, "requiredStems": ["What I moved today was… What I only planned to move was… The difference between those two lists is…"] },
+      "narrativeCheck": {
+        "questions": ["Did I feel a future win before earning it today?", "If yes — what, and at what hour?"],
+        "refusalRule": "A finished map feels like a funded treasury. Categories are not custody."
+      },
+      "seal": {
+        "canFail": true,
+        "requirements": ["Treasury & Authority Map (five resources, every field)", "Capital split (numbers or signed UNSPLIT)", "Transfer evidence", "Voice memo >= 3:00", "Tallies with timestamps"],
+        "discomfortThresholdNote": "under 7 = you moved what nobody would notice",
+        "failureMessage": "I categorized and did not move.",
+        "sealLaw": "What I do not allocate will be allocated by pressure."
+      }
+    },
+    {
+      "protocolVersion": "genesis.v1",
+      "dayNumber": 6,
+      "slug": "the-reality-mutation",
+      "title": "THE REALITY MUTATION",
+      "removes": "Purely internal change",
+      "requiredOutput": "Mutation Packet",
+      "doctrine": {
+        "doctrineId": "D-106",
+        "name": "REVERSIBILITY PREFERENCE",
+        "proposition": "SELF selects changes that can be undone unseen, because witnessed, irreversible change can fail publicly.",
+        "prediction": "Mutation candidates get privately drafted and publicly withheld; 'it needs to be better first' appears.",
+        "falsificationRule": "The mutation ships witnessed and hard-to-reverse before evening — the preference is broken or absent. Record it.",
+        "falsificationIsWin": true
+      },
+      "trap": {
+        "name": "THE PRIVATE MUTATION",
+        "definition": "Doing real work and keeping it invisible — writing the offer, not publishing it; drafting the message, not sending it. Unseen changes can't be judged, so they can't fail — and so they aren't evidence.",
+        "secondHead": "THE WORTHINESS DELAY — 'it needs to be better before anyone sees it.' The send button is the mutation; everything before it is rehearsal, and that budget is spent.",
+        "detectionSignals": ["pull toward the quietly reversible candidate", "flinch at the moment a witness would enter", "worthiness delays clustering at the send boundary, never at the build"],
+        "runtimeResponse": "If no one could dispute your evidence, it is not evidence yet. The Gate asks 'why is it hard to reverse' to catch the pull at selection time, not at midnight.",
+        "readOncePolicy": true
+      },
+      "gate": {
+        "prompt": "The mutation artifact that will exist by midnight is: / Its witness is: / Why it is hard to reverse:",
+        "artifactLineCount": 3,
+        "definitionOfDone": [
+          "The Mutation Packet complete before execution — evidence standard declared in advance",
+          "The external state changed by midnight — checkable by someone other than SELF",
+          "Before/after evidence captured to the packet's declared standard",
+          "The witness can confirm the new state exists"
+        ],
+        "completionStatements": ["The mutation executed.", "The mutation did not execute."],
+        "failureConditions": ["No artifact + witness + irreversibility line — the day does not start", "A perfect packet with an unchanged world"]
+      },
+      "deadline": { "boundary": "midnight_local", "law": "External state change by midnight." },
+      "openingDebt": { "requiredPriorDay": 5, "resolutionRequirement": "Day 5 sealed or failure line written. Every debt carried past tonight arrives in tomorrow's docket as an UNPROVEN exhibit." },
+      "stations": [
+        { "stationId": "d6-s1", "name": "THE CANDIDATE BOARD", "law": "Seven mutation classes (economic, structural, relational, creative, environmental, identity, legal/admin); at least one live candidate per applicable class; selection audit logs the candidate NOT chosen and why." },
+        { "stationId": "d6-s2", "name": "THE MUTATION PACKET", "law": "Complete before execution; evidence standard declared in advance so tonight's evidence can't be negotiated downward; rollback cost must be > 0; formula: OLD STATE -> AUTHORIZED ACTION -> NEW MATERIAL STATE -> EVIDENCE." },
+        { "stationId": "d6-s3", "name": "EXECUTION + EVIDENCE", "law": "Execution hour, before/after evidence, witness confirmation (or scheduled confirmation date), feeling one second before the send." }
+      ],
+      "materialAction": { "name": "THE MUTATION", "requirement": "External state change by midnight, witnessed, to the pre-declared evidence standard." },
+      "tally": { "eventType": "genesis.tally.worthiness", "label": "worthiness", "timestampRequired": true, "reasonFieldForbidden": true, "countsAs": "every 'needs to be better first', 'not ready for eyes yet', 'I'll send the improved version', every flinch at the witness boundary" },
+      "mirror": {
+        "sourcePolicy": "verbatim_user_language",
+        "question": "Both of those happened where others could check them. What is different about today's candidate that made you consider doing it in private — the stakes, or the audience? And if the audience is the variable: who exactly are you keeping from watching?",
+        "sourceFields": ["day3.conversion_artifact", "day5.transfer_evidence"]
+      },
+      "eveningMemo": { "minimumSeconds": 180, "requiredStems": ["The moment before I made it public, I felt… If this mutation fails in front of witnesses, the actual cost is…"] },
+      "narrativeCheck": {
+        "questions": ["Did I feel a future win before earning it today?", "If yes — what, and at what hour?"],
+        "refusalRule": "A completed packet feels like a completed mutation. The packet is paperwork until the state changes."
+      },
+      "seal": {
+        "canFail": true,
+        "requirements": ["Candidate board", "Mutation Packet (pre-declared standard)", "Before/after evidence", "Witness record", "Voice memo >= 3:00", "Tallies with timestamps"],
+        "discomfortThresholdNote": "under 7 = the mutation was reversible",
+        "failureMessage": "I rehearsed and did not ship.",
+        "sealLaw": "Reality does not record intention. It records state change."
+      }
+    },
+    {
+      "protocolVersion": "genesis.v1",
+      "dayNumber": 7,
+      "slug": "the-evidence-court",
+      "title": "THE EVIDENCE COURT",
+      "removes": "Unsupported identity",
+      "requiredOutput": "Genesis Verdict · Law · Mission · Witness",
+      "doctrine": {
+        "doctrineId": "D-107",
+        "name": "NARRATIVE SENTENCING",
+        "proposition": "SELF converts a mixed evidence record into a clean story — triumph or indictment — because stories end and records carry.",
+        "prediction": "Pressure to grade all declarations in the same direction.",
+        "falsificationRule": "The verdict sheet lands mixed, every verdict carries a citation, and the thirty-day mission is built from PARTIALLY PROVEN items — sentencing was resisted. Record it.",
+        "falsificationIsWin": true
+      },
+      "trap": {
+        "name": "THE CLEAN STORY",
+        "definition": "The last lie of the week is the summary. Two escapes: the transformation story ('I'm a different person now' — arrival ends the accounting) and the indictment story ('this proved nothing' — total failure dismisses the record). Both mean the record doesn't have to be carried.",
+        "detectionSignals": ["all verdicts in one direction", "urge to summarize the week as triumph or indictment", "story urges spiking near verdicts that hurt"],
+        "runtimeResponse": "PARTIALLY PROVEN is not a lesser grade — it is the most honest verdict available on day seven and the only one that produces a real thirty-day mission. A one-directional verdict sheet gets re-tried with the trap in view.",
+        "readOncePolicy": true
+      },
+      "gate": {
+        "prompt": "The docket — assembled before the court convenes. The court tries declarations, not days.",
+        "artifactLineCount": 0,
+        "gateForm": "docket",
+        "docketExhibits": ["Six seals or failure lines", "Reality Position Sheet + exposure artifact", "Extraction Graph + revocation evidence", "Force Ledger + conversion artifact", "Betrayal Record + repair artifact", "Treasury Map + transfer evidence", "Mutation Packet + before/after", "All voice memos", "All tallies with timestamps", "Structure log (7 days)"],
+        "definitionOfDone": [
+          "Docket complete — all exhibits attached",
+          "Minimum 5 declarations docketed (every claim SELF made in writing this week)",
+          "Every verdict carries an exhibit citation",
+          "One constitutional law with detection method",
+          "Thirty-day mission, all nine fields with numbers/dates",
+          "Node witness statement collected (unflattered)"
+        ],
+        "completionStatements": ["The court sat on the full docket.", "The court did not sit."],
+        "failureConditions": ["Incomplete docket — the court does not convene; an unconvened court is a failed Day 7, write the line", "Verdicts without citations", "A mission without numbers"]
+      },
+      "verdictVocabulary": ["PROVEN", "PARTIALLY_PROVEN", "UNPROVEN"],
+      "verdictLaw": "A verdict without an exhibit reference is void. All-one-direction distributions get re-tried.",
+      "openingDebt": { "requiredPriorDay": 6, "resolutionRequirement": "ALL days 1-6 stand as Sealed or Failed-Measured in writing. Debts payable this morning get paid; debts that cannot enter the docket as exhibits, not excuses." },
+      "stations": [
+        { "stationId": "d7-s1", "name": "THE PRESENTATION", "law": "Seven lines filled from exhibits only — no memory, no vibe (claimed/measured/interrupted/proved/repossessed/mutated/unresolved)." },
+        { "stationId": "d7-s2", "name": "THE TRIAL", "law": "Every docketed declaration gets exactly one verdict with a citation; distribution check; cross-examination answered from exhibits." },
+        { "stationId": "d7-s3", "name": "THE GENESIS VERDICT", "law": "Five statuses (capability, execution, authority, risk, coherence), one line each, present tense, evidence-cited." },
+        { "stationId": "d7-s4", "name": "THE CONSTITUTIONAL LAW", "law": "One law enters the 365-Day Journey. Executable, checkable, violable — otherwise it is a mood. Detection method and cadence named." },
+        { "stationId": "d7-s5", "name": "THE THIRTY-DAY MISSION", "law": "Built from the PARTIALLY PROVEN rows; every one of nine fields carries a number or a date." },
+        { "stationId": "d7-s6", "name": "THE NODE WITNESS", "law": "A person from the Genesis circle confirms one observable shift. Not praise. Flattery voids the statement (covenant clause 9)." }
+      ],
+      "materialAction": { "name": "THE SENTENCING", "requirement": "Sentencing on evidence only — verdicts with citations, one law, one mission with numbers." },
+      "tally": { "eventType": "genesis.tally.story", "label": "story", "timestampRequired": true, "reasonFieldForbidden": true, "countsAs": "every urge to summarize the week as triumph or indictment — both directions count; story urges spike near verdicts that hurt" },
+      "mirror": {
+        "sourcePolicy": "verbatim_user_language",
+        "question": "Which verdict are you tempted to argue with? Write it. That is the one to read twice — the argument is coming from the identity the evidence didn't support. What does that identity lose when the verdict stands?",
+        "sourceFields": ["day7.trial.verdicts"]
+      },
+      "eveningMemo": { "minimumSeconds": 180, "requiredStems": ["The verdict I wanted was… The verdict the evidence permits is… The law I will actually keep is…"] },
+      "narrativeCheck": {
+        "questions": ["Did I feel a future win before earning it today?", "If yes — what, and at what hour?"],
+        "refusalRule": "Day 7's counterfeit is graduation. The court is not a ceremony."
+      },
+      "weekLedger": { "narratedUnmeasuredPassingValue": 0 },
+      "seal": {
+        "canFail": true,
+        "requirements": ["Court sat on the full docket", "Every verdict carries an exhibit citation", "One law with detection method", "Thirty-day mission (nine fields, numbers/dates)", "Node witness statement (unflattered)", "Week ledger complete"],
+        "discomfortThresholdNote": "under 7 = the court flattered the defendant",
+        "failureMessage": "The court did not sit.",
+        "sealLaw": "SELF HAS ENTERED THE RECORD."
+      }
+    }
+  ]
+}

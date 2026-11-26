@@ -329,6 +329,41 @@ test("receiveCallback: rejects unapproved canonical patch paths without mutating
   assert.ok(state.errors.some((e) => e.code === "INVALID_CANONICAL_PATCH"));
 });
 
+test("Mark Important: refuses to emit when can_flag_reflection is false", () => {
+  const fixture = freshFixture(completedDayFixture);
+  fixture.permissions.can_flag_reflection = false;
+  realm.mount("realm-root", fixture);
+  realm.__test__.triggerFlagImportant(fixture.day.day_id);
+  assert.equal(sentEvents.length, 0);
+  assert.ok(realm.getState().errors.some((e) => e.code === "FLAG_NOT_ALLOWED"));
+});
+
+test("Mark Important: stale accepted callback reconciles to the newer canonical flag", () => {
+  realm.mount("realm-root", freshFixture(completedDayFixture));
+  const eventId = realm.__test__.triggerFlagImportant(completedDayFixture.day.day_id);
+  assert.equal(realm.getState().view.flagged[completedDayFixture.day.day_id], true);
+
+  const newerPayload = freshFixture(completedDayFixture);
+  newerPayload.revision = completedDayFixture.revision + 1;
+  newerPayload.day.reflection.important = false;
+  assert.equal(realm.update(newerPayload).ok, true);
+
+  realm.receiveCallback({
+    schema_version: "1.0.0",
+    callback_id: "cb-flag-stale",
+    event_id: eventId,
+    event_type: "journey.reflection.flag_requested",
+    status: "accepted",
+    processed_at: "2026-07-14T12:00:05Z",
+    new_revision: newerPayload.revision
+  });
+
+  const state = realm.getState();
+  assert.equal(state.canonical.day.reflection.important, false);
+  assert.equal(state.view.flagged[completedDayFixture.day.day_id], false);
+  assert.ok(state.errors.some((e) => e.code === "STALE_ACCEPTED_CALLBACK"));
+});
+
 test("receiveCallback: stale callback does not clear a newer pending save", () => {
   realm.mount("realm-root", freshFixture(activeDayFixture));
   const staleEventId = realm.__test__.triggerSaveReflection("older draft");

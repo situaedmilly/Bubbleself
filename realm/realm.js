@@ -29,6 +29,16 @@
     "server_error"
   ];
 
+  // Accepted callbacks may update only fields owned by the originating intent.
+  // This is a client-side integrity boundary, not a substitute for server authorization.
+  var PATCH_PATHS_BY_EVENT = {
+    "journey.reflection.save_requested": ["day.reflection.existing_text"],
+    "journey.day.seal_requested": ["day.status", "day.sealed_at", "permissions.can_seal_day"],
+    "journey.reflection.flag_requested": ["day.reflection.important"],
+    "realm.navigate_requested": [],
+    "journey.section.viewed": []
+  };
+
   // ---------------------------------------------------------------------
   // Minimal JSON-schema validator (subset: type, enum, required, properties,
   // additionalProperties:false, items). No external dependency.
@@ -223,7 +233,7 @@
       schema_version: { type: "string" },
       callback_id: { type: "string" },
       event_id: { type: "string" },
-      event_type: { type: "string" },
+      event_type: { type: "string", enum: CLOSED_EVENT_TYPES },
       status: { type: "string", enum: CALLBACK_STATUSES },
       processed_at: { type: "string" },
       new_revision: { type: "integer" },
@@ -261,13 +271,27 @@
     });
   }
 
-  function applyPatch(target, patch) {
-    Object.keys(patch || {}).forEach(function (dottedPath) {
+  function applyPatch(target, patch, allowedPaths) {
+    if (!patch || typeof patch !== "object" || Array.isArray(patch)) {
+      throw new Error("canonical_patch must be an object");
+    }
+    Object.keys(patch).forEach(function (dottedPath) {
+      if (!allowedPaths || allowedPaths.indexOf(dottedPath) === -1) {
+        throw new Error("canonical_patch path is not allowed: " + dottedPath);
+      }
       var parts = dottedPath.split(".");
+      if (parts.some(function (part) {
+        return part === "__proto__" || part === "prototype" || part === "constructor";
+      })) {
+        throw new Error("canonical_patch contains a forbidden path segment");
+      }
       var cursor = target;
       for (var i = 0; i < parts.length - 1; i++) {
         var key = parts[i];
-        if (typeof cursor[key] !== "object" || cursor[key] === null) cursor[key] = {};
+        if (!Object.prototype.hasOwnProperty.call(cursor, key) ||
+            typeof cursor[key] !== "object" || cursor[key] === null || Array.isArray(cursor[key])) {
+          throw new Error("canonical_patch path does not exist: " + dottedPath);
+        }
         cursor = cursor[key];
       }
       cursor[parts[parts.length - 1]] = patch[dottedPath];
@@ -484,7 +508,11 @@
       throw new Error("bubble_fn_realm_event is not defined; cannot dispatch event " + type);
     }
 
-    state.pending[event.event_id] = { event_type: type };
+    state.pending[event.event_id] = {
+      event_type: type,
+      source_revision: state.canonical.revision,
+      payload_id: state.canonical.payload_id
+    };
     sender(JSON.stringify(event));
     return event.event_id;
   }
@@ -521,16 +549,79 @@
 
     var pendingEntry = state.pending[callback.event_id];
     if (!pendingEntry) return; // unknown or already-resolved event_id: ignore
+    if (callback.event_type !== pendingEntry.event_type) {
+      state.errors.push({
+        code: "CALLBACK_EVENT_TYPE_MISMATCH",
+        message: "Callback event_type does not match the originating pending event."
+      });
+      return; // Do not consume the legitimate pending event.
+    }
     delete state.pending[callback.event_id];
 
     if (callback.status === "accepted") {
-      if (callback.new_revision < state.canonical.revision) return; // stale accepted callback: ignore
-      if (callback.canonical_patch) applyPatch(state.canonical, callback.canonical_patch);
-      state.canonical.revision = callback.new_revision;
-      if (callback.result && callback.result.next_bubble_input) {
-        update(callback.result.next_bubble_input);
+      if (callback.new_revision <= pendingEntry.source_revision) {
+        finalizeOptimistic(pendingEntry, false);
+        state.errors.push({
+          code: "INVALID_CALLBACK_REVISION",
+          message: "Accepted callback revision must advance beyond its source revision."
+        });
+        renderIfPossible();
         return;
       }
+      if (callback.new_revision <= state.canonical.revision) {
+        finalizeOptimistic(pendingEntry, false);
+        state.errors.push({
+          code: "STALE_ACCEPTED_CALLBACK",
+          message: "Accepted callback is older than the current canonical revision."
+        });
+        renderIfPossible();
+        return;
+      }
+
+      if (callback.result && callback.result.next_bubble_input) {
+        var nextPayload = callback.result.next_bubble_input;
+        var nextErrors = validate(BUBBLE_INPUT_SCHEMA, nextPayload);
+        var hasPatch = callback.canonical_patch && Object.keys(callback.canonical_patch).length > 0;
+        if (nextErrors.length || hasPatch || nextPayload.revision !== callback.new_revision) {
+          finalizeOptimistic(pendingEntry, false);
+          state.errors.push({
+            code: "INVALID_CALLBACK_RESULT",
+            message: nextErrors.length
+              ? nextErrors.join("; ")
+              : "next_bubble_input must be the sole canonical update and match new_revision."
+          });
+          renderIfPossible();
+          return;
+        }
+        var updateResult = update(nextPayload);
+        if (!updateResult.ok) {
+          finalizeOptimistic(pendingEntry, false);
+          state.errors.push({ code: "INVALID_CALLBACK_RESULT", message: "next_bubble_input was not accepted." });
+          renderIfPossible();
+          return;
+        }
+        finalizeOptimistic(pendingEntry, true);
+        renderIfPossible();
+        return;
+      }
+
+      var candidate = deepClone(state.canonical);
+      try {
+        if (callback.canonical_patch) {
+          applyPatch(candidate, callback.canonical_patch, PATCH_PATHS_BY_EVENT[pendingEntry.event_type] || []);
+        }
+        candidate.revision = callback.new_revision;
+        var candidateErrors = validate(BUBBLE_INPUT_SCHEMA, candidate);
+        if (candidateErrors.length) throw new Error(candidateErrors.join("; "));
+      } catch (patchError) {
+        finalizeOptimistic(pendingEntry, false);
+        state.errors.push({ code: "INVALID_CANONICAL_PATCH", message: patchError.message });
+        renderIfPossible();
+        return;
+      }
+
+      state.canonical = candidate;
+      state.view = deriveView(state.canonical, state.view);
       finalizeOptimistic(pendingEntry, true);
     } else {
       finalizeOptimistic(pendingEntry, false);

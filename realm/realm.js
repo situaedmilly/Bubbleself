@@ -510,8 +510,7 @@
 
     state.pending[event.event_id] = {
       event_type: type,
-      source_revision: state.canonical.revision,
-      payload_id: state.canonical.payload_id
+      source_revision: state.canonical.revision
     };
     sender(JSON.stringify(event));
     return event.event_id;
@@ -520,13 +519,17 @@
   function finalizeOptimistic(pendingEntry, success) {
     switch (pendingEntry.event_type) {
       case "journey.reflection.save_requested":
-        state.view.saving = false;
-        if (success && state.canonical.day && state.canonical.day.reflection) {
+        state.view.saving = Object.keys(state.pending).some(function (eventId) {
+          return state.pending[eventId].event_type === "journey.reflection.save_requested";
+        });
+        if (success && !state.view.saving && state.canonical.day && state.canonical.day.reflection) {
           state.view.reflectionDraft = state.canonical.day.reflection.existing_text;
         }
         break;
       case "journey.day.seal_requested":
-        state.view.sealing = false;
+        state.view.sealing = Object.keys(state.pending).some(function (eventId) {
+          return state.pending[eventId].event_type === "journey.day.seal_requested";
+        });
         break;
       case "journey.reflection.flag_requested":
         if (!success && state.canonical.day) {

@@ -328,8 +328,8 @@
           : (canonical.day.reflection ? canonical.day.reflection.existing_text || "" : "");
       view.saving = false;
       view.sealing = false;
-      if (canonical.day.reflection && canonical.day.reflection.important) {
-        view.flagged[canonical.day.day_id] = true;
+      if (canonical.day.reflection && typeof canonical.day.reflection.important === "boolean") {
+        view.flagged[canonical.day.day_id] = canonical.day.reflection.important;
       }
     }
 
@@ -383,10 +383,12 @@
         visibleDays.map(function (d) { return "<li>" + d.day_id + " (" + d.status + ")</li>"; }).join("") +
         "</ul>";
     } else if (c.realm_id === "reflection") {
+      var flagEnabled = !!(c.permissions && c.permissions.can_flag_reflection);
       html =
         '<textarea class="realm-reflection-input">' + (v.reflectionDraft || "") + "</textarea>" +
         '<button class="realm-submit-btn">Submit</button>' +
-        '<button class="realm-flag-btn">' + (c.day && v.flagged[c.day.day_id] ? "★ Important" : "☆ Mark Important") + "</button>";
+        '<button class="realm-flag-btn" ' + (flagEnabled ? "" : "disabled") + ">" +
+        (c.day && v.flagged[c.day.day_id] ? "★ Important" : "☆ Mark Important") + "</button>";
     }
 
     state.container.innerHTML = html;
@@ -572,7 +574,10 @@
         return;
       }
       if (callback.new_revision <= state.canonical.revision) {
-        finalizeOptimistic(pendingEntry, false);
+        // The server accepted this intent, but a newer canonical snapshot already won.
+        // Reconcile the view from that snapshot; do not roll back an accepted action.
+        state.view = deriveView(state.canonical, state.view);
+        finalizeOptimistic(pendingEntry, true);
         state.errors.push({
           code: "STALE_ACCEPTED_CALLBACK",
           message: "Accepted callback is older than the current canonical revision."
@@ -690,6 +695,10 @@
 
   function triggerFlagImportant(dayId) {
     if (!state.mounted) throw new Error("Cannot flag before mount");
+    if (!state.canonical.permissions || !state.canonical.permissions.can_flag_reflection) {
+      state.errors.push({ code: "FLAG_NOT_ALLOWED", message: "Cannot flag this reflection now." });
+      return;
+    }
     var wasFlagged = !!state.view.flagged[dayId];
     state.view.flagged[dayId] = !wasFlagged;
     return emitEvent("journey.reflection.flag_requested", { day_id: dayId, flag: !wasFlagged });

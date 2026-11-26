@@ -283,6 +283,92 @@ test("emitEvent: throws (no silent failure) when bubble_fn_realm_event is not de
   assert.throws(() => realm.__test__.triggerSaveReflection("no sender registered"));
 });
 
+
+test("receiveCallback: callback event_type must match the originating pending event", () => {
+  realm.mount("realm-root", freshFixture(activeDayFixture));
+  const eventId = realm.__test__.triggerSaveReflection("draft");
+
+  realm.receiveCallback({
+    schema_version: "1.0.0",
+    callback_id: "cb-wrong-type",
+    event_id: eventId,
+    event_type: "journey.day.seal_requested",
+    status: "accepted",
+    processed_at: "2026-07-14T12:00:01Z",
+    new_revision: activeDayFixture.revision + 1,
+    canonical_patch: { "day.status": "completed" }
+  });
+
+  const state = realm.getState();
+  assert.equal(state.canonical.revision, activeDayFixture.revision);
+  assert.equal(state.canonical.day.status, "active");
+  assert.ok(state.pending[eventId]);
+  assert.ok(state.errors.some((e) => e.code === "CALLBACK_EVENT_TYPE_MISMATCH"));
+});
+
+test("receiveCallback: rejects unapproved canonical patch paths without mutating state", () => {
+  realm.mount("realm-root", freshFixture(activeDayFixture));
+  const eventId = realm.__test__.triggerSaveReflection("draft");
+
+  realm.receiveCallback({
+    schema_version: "1.0.0",
+    callback_id: "cb-bad-patch",
+    event_id: eventId,
+    event_type: "journey.reflection.save_requested",
+    status: "accepted",
+    processed_at: "2026-07-14T12:00:01Z",
+    new_revision: activeDayFixture.revision + 1,
+    canonical_patch: JSON.parse('{"__proto__.polluted":true}')
+  });
+
+  const state = realm.getState();
+  assert.equal(state.canonical.revision, activeDayFixture.revision);
+  assert.equal(state.canonical.day.reflection.existing_text, "");
+  assert.equal(Object.prototype.polluted, undefined);
+  assert.equal(state.view.saving, false);
+  assert.ok(state.errors.some((e) => e.code === "INVALID_CANONICAL_PATCH"));
+});
+
+test("receiveCallback: stale accepted callback clears optimistic state without overwriting newer canonical state", () => {
+  const fixture = freshFixture(activeDayFixture);
+  fixture.permissions.can_seal_day = true;
+  realm.mount("realm-root", fixture);
+  const saveEventId = realm.__test__.triggerSaveReflection("draft");
+  const sealEventId = realm.__test__.triggerSealDay();
+
+  realm.receiveCallback({
+    schema_version: "1.0.0",
+    callback_id: "cb-seal-first",
+    event_id: sealEventId,
+    event_type: "journey.day.seal_requested",
+    status: "accepted",
+    processed_at: "2026-07-14T12:00:02Z",
+    new_revision: fixture.revision + 1,
+    canonical_patch: {
+      "day.status": "completed",
+      "day.sealed_at": "2026-07-14T12:00:01Z",
+      "permissions.can_seal_day": false
+    }
+  });
+
+  assert.equal(realm.getState().view.saving, true);
+  realm.receiveCallback({
+    schema_version: "1.0.0",
+    callback_id: "cb-save-stale",
+    event_id: saveEventId,
+    event_type: "journey.reflection.save_requested",
+    status: "accepted",
+    processed_at: "2026-07-14T12:00:03Z",
+    new_revision: fixture.revision + 1
+  });
+
+  const state = realm.getState();
+  assert.equal(state.canonical.revision, fixture.revision + 1);
+  assert.equal(state.canonical.day.status, "completed");
+  assert.equal(state.view.saving, false);
+  assert.ok(state.errors.some((e) => e.code === "STALE_ACCEPTED_CALLBACK"));
+});
+
 test("destroy: resets state so a subsequent mount starts clean", () => {
   realm.mount("realm-root", freshFixture(activeDayFixture));
   realm.__test__.triggerSaveReflection("in progress");

@@ -8,7 +8,16 @@
     "schema_version": { "type": "string" },
     "callback_id": { "type": "string" },
     "event_id": { "type": "string" },
-    "event_type": { "type": "string" },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "journey.reflection.save_requested",
+        "journey.day.seal_requested",
+        "journey.reflection.flag_requested",
+        "realm.navigate_requested",
+        "journey.section.viewed"
+      ]
+    },
     "status": {
       "type": "string",
       "enum": ["accepted", "rejected", "invalid", "stale_revision", "conflict", "server_error"]
